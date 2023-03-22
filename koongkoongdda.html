@@ -1,60 +1,58 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <title>끝말잇기</title>
+    <h1>쿵쿵따 게임</h1>
     <div><span id="order">1</span>번째 참가자</div>
-    <div id="start">제시어: <span id="word"></span></div>
+    <div>제시어: <span id="word"></span></div>
     <input type="text" />
-    <button>입력</button>
+    <button id="button">입력</button>
+
     <script>
-      console.log("a");
-      const number = Number(prompt("몇명이 참가하나요?"));
-      const $button = document.querySelector("button");
-      const $input = document.querySelector("input");
-      const $word = document.querySelector("#word");
       const $order = document.querySelector("#order");
+      const $word = document.getElementById("word");
+      const $input = document.querySelector("input");
+      const $button = document.getElementById("button");
+      const number = Number(prompt("몇명이 참가하나요?"));
       let word;
       let newWord;
-      const onClickButton = () => {
+      const onClick = () => {
         if (word == undefined) {
-          console.log("word");
+          if (newWord.length != 3) {
+            alert("잘못된 제시어입니다");
+            $input.value = "";
+            $input.focus();
+            return;
+          }
           word = newWord;
           $word.textContent = word;
           const order = Number($order.textContent);
-          if (order + 1 > number) {
+          if (order == number) {
             $order.textContent = 1;
           } else {
             $order.textContent = order + 1;
           }
-          $input.value = "";
-          $input.focus();
         } else {
-          if (word[word.length - 1] == newWord[0]) {
+          if (word[word.length - 1] == newWord[0] && newWord.length == 3) {
             word = newWord;
             $word.textContent = word;
-            $input.value = "";
             const order = Number($order.textContent);
-            if (order + 1 > number) {
+            if (order == number) {
               $order.textContent = 1;
             } else {
               $order.textContent = order + 1;
             }
           } else {
-            console.log("nope");
-            alert("올바르지 않은 단어입니다!");
+            alert("잘못된 제시어입니다");
           }
-          $input.value = "";
-          $input.focus();
         }
+        $input.value = "";
+        $input.focus();
       };
-      console.log("b");
       const onInput = (event) => {
-        console.log("c");
         newWord = event.target.value;
       };
-      $button.addEventListener("click", onClickButton);
+      $button.addEventListener("click", onClick);
       $input.addEventListener("input", onInput);
-      console.log("d");
     </script>
   </body>
 </html>
